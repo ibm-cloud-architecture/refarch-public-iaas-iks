@@ -1,7 +1,15 @@
-#####################################################################
+################################################################################################
 # This Terraform file defines the variables used in this Terraform
 # scripts for this repo.
-#####################################################################
+#
+# A Note about API Keys and Access Keys (i.e. paas_apikey, logdna_ingestion_key,
+# and sysdig_access_key). For security reasons, the values for these variables should never
+# put into GitHub Repo, (i.e terraform.tfvars).  These types of variables values can be hidden
+# with DevOps tools such as Jenkins and UrbanCode Deploy.   At provisioning time the values
+# can be set in the Terraform run time container as environment variables, using the environment
+# variable feature of Terraform (for example for the paas_apikey, see ../Dockerfile line # 8).
+#################################################################################################
+
 
 ################################################
 # IBM Cloud Provider vars
