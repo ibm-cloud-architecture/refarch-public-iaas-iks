@@ -1,0 +1,43 @@
+FROM ibmterraform/terraform-provider-ibm-docker:v0.14.0
+
+ENV TFPATH /tf
+ENV CALICO_CLI_VERSION v3.3.1
+ENV KUBE_CLI_VERSION v1.11.5
+
+# IBM Cloud credentials
+ENV TF_VAR_paas_apikey=REPLACE_WTIH_YOUR_IBMCLOUD_API_KEY
+
+WORKDIR /tf
+
+# setup the PV mount point - must match value of DEVOPS_TFBACKEND_MOUNT in the UCD application configuration
+# RUN mkdir -p /mnt/tfbackend
+
+###################################################################################################
+# Get IBM Cloud CLI (Kubernetes Service CLI and Container Registry CLI)
+# References:
+#  https://console.bluemix.net/docs/cli/reference/ibmcloud/download_cli.html#install_use
+#  https://console.bluemix.net/docs/cli/reference/ibmcloud/download_cli.html#shell_install
+###################################################################################################
+RUN curl -fsSL https://plugins.cloud.ibm.com/install/linux | sh
+RUN ibmcloud plugin install container-service -r "IBM Cloud"
+RUN ibmcloud plugin install container-registry -r "IBM Cloud"
+
+###################################################################################################
+# Get Kubernetes CLI
+# Reference:
+#  Step # 4 at
+#  https://console.bluemix.net/docs/containers/cs_cli_install.html#cs_cli_install_steps
+# For the latest stable - you can use this
+# RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+###################################################################################################
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBE_CLI_VERSION}/bin/linux/amd64/kubectl
+RUN chmod a+x kubectl
+RUN mv kubectl /usr/local/bin
+
+################################################################################################
+# Get Calico CLI
+# Reference:  https://console.bluemix.net/docs/containers/cs_network_policy.html#cli_install
+################################################################################################
+RUN curl -O -L https://github.com/projectcalico/calicoctl/releases/download/${CALICO_CLI_VERSION}/calicoctl
+RUN mv ./calicoctl /usr/local/bin/calicoctl
+RUN chmod +x /usr/local/bin/calicoctl

@@ -1,0 +1,84 @@
+# This policy whitelists a source IP and allows that IP access to a specific IP (ingress or load balancer) and port.
+# If you are using a multizone cluster, you must also whitelist the listed Cloudflare IPs in order to allow successful routing: https://www.cloudflare.com/ips/.
+# Note that the order field must be lower then the order number in ../calico-polices/public/template_deny-ingress.yaml
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-src-ip
+spec:
+  ingress:
+  - action: Allow
+    protocol: TCP
+    destination:
+      nets:
+      # Replace with ingress or load balancer IP address
+      # - <cluster ip to allow access to>/32
+      # - INGRESS_IP_0/32
+      # - INGRESS_IP_1/32
+      # - INGRESS_IP_2/32
+      # - <IP to allow access to>/32
+      ports:
+      - 443
+    source:
+    # IP that will have access to the cluster
+    # Script will replace tokens with IP address from input properties
+    # Following the DEVOPS_IP and GLB_IP are the required  IBM Cloud Internet Services (Cloudflare) IPs from https://www.cloudflare.com/ips/
+    # IBM Cloud Internet services see https://console.bluemix.net/docs/infrastructure/cis/about.html#about-ibm-cloud-internet-services
+    # - <source ip to whitelist>
+      nets:
+      - DEVOPS_IP
+      - GLB_IP
+      - 103.21.244.0/22
+      - 103.22.200.0/22
+      - 103.31.4.0/22
+      - 104.16.0.0/12
+      - 108.162.192.0/18
+      - 131.0.72.0/22
+      - 141.101.64.0/18
+      - 162.158.0.0/15
+      - 172.64.0.0/13
+      - 173.245.48.0/20
+      - 188.114.96.0/20
+      - 190.93.240.0/20
+      - 197.234.240.0/22
+      - 198.41.128.0/17
+  - action: Allow
+    protocol: UDP
+    destination:
+      nets:
+      # - <cluster ip to allow access to>/32
+      # - INGRESS_IP_0/32
+      # - INGRESS_IP_1/32
+      # - INGRESS_IP_2/32
+      # - <IP to allow access to>/32
+      ports:
+      - 443
+    source:
+    # Script will replace tokens with IP address from input properties
+    # Following the DEVOPS_IP and GLB_IP are the required  IBM Cloud Internet Services (Cloudflare) IPs from https://www.cloudflare.com/ips/
+    # IBM Cloud Internet services see https://console.bluemix.net/docs/infrastructure/cis/about.html#about-ibm-cloud-internet-services
+    # - <source IP to whitelist>/32
+    # IP that will have access to the cluster
+      nets:
+      - DEVOPS_IP
+      - GLB_IP
+      - 103.21.244.0/22
+      - 103.22.200.0/22
+      - 103.31.4.0/22
+      - 104.16.0.0/12
+      - 108.162.192.0/18
+      - 131.0.72.0/22
+      - 141.101.64.0/18
+      - 162.158.0.0/15
+      - 172.64.0.0/13
+      - 173.245.48.0/20
+      - 188.114.96.0/20
+      - 190.93.240.0/20
+      - 197.234.240.0/22
+      - 198.41.128.0/17
+  preDNAT: true
+  order: 500
+  selector: ibm.role=='worker_public'
+  applyOnForward: true
+  types:
+  - Ingress

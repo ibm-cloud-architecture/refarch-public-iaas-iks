@@ -1,0 +1,35 @@
+# This policy blocks ingress.
+# The order field must be higher then the order number in ../calico-policies/public/template_allow-src-ip.yaml
+# Note that INGRESS_IP_X is a token that is replaced with the ingress alb ip
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: deny-ingress
+spec:
+  ingress:
+  - action: Deny
+    destination:
+      nets:
+      # replace with ingress or load balancer IP address
+      # - <IP to deny access to>/32
+      # - INGRESS_IP_0/32
+      # - INGRESS_IP_1/32
+      # - INGRESS_IP_2/32
+    protocol: TCP
+    source: {}
+  - action: Deny
+    destination:
+      nets:
+      # replace with ingress or load balancer IP address
+      # - <IP to deny access to>/32
+      # - INGRESS_IP_0/32
+      # - INGRESS_IP_1/32
+      # - INGRESS_IP_2/32
+    protocol: UDP
+    source: {}
+  preDNAT: true
+  selector: ibm.role=='worker_public'
+  applyOnForward: true
+  order: 1100
+  types:
+  - Ingress

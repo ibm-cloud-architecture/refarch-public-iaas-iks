@@ -1,0 +1,37 @@
+####################################################################################
+# This ingress resource template is an example.  It needs to be updated with
+# the service entries the application deployed to this cluster wants to expose.
+#
+# INGRESS_RESOURCE_NAME, INGRESS_HOSTNAME and INGRESS_SECRET are tokens that
+# are replaced by the script configuration/configure-ingress-resource.sh with
+# the terraform created cluster attributes.
+#
+# For more information on Ingress,  see the following:
+# https://cloud.ibm.com/docs/containers/cs_ingress.html#ingress
+# https://kubernetes.io/docs/concepts/services-networking/ingress/
+#####################################################################################
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: INGRESS_RESOURCE_NAME
+  annotations:
+    ingress.bluemix.net/redirect-to-https: "True"
+    ingress.bluemix.net/rewrite-path: "serviceName=app-svc rewrite=/api;serviceName=app-update-svc rewrite=/api"
+spec:
+  tls:
+  - hosts:
+    - INGRESS_HOSTNAME
+    secretName: INGRESS_SECRET
+  rules:
+  - host: INGRESS_HOSTNAME
+    http:
+      paths:
+      - path: /app/api
+        backend:
+          serviceName: app-svc
+          servicePort: 9080
+      - path: /app-update/api
+        backend:
+          serviceName: app-update-svc
+          servicePort: 9081

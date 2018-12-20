@@ -1,0 +1,26 @@
+# This policy blocks all nodeports in a cluster. Source: https://console.bluemix.net/docs/containers/cs_network_policy.html#block_ingress
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: deny-kube-node-port-services
+spec:
+  applyOnForward: true
+  ingress:
+  - action: Deny
+    destination:
+      ports:
+      - 30000:32767
+    protocol: TCP
+    source: {}
+  - action: Deny
+    destination:
+      ports:
+      - 30000:32767
+    protocol: UDP
+    source: {}
+  order: 1400
+  preDNAT: true
+  selector: ibm.role=='worker_public'
+  types:
+  - Ingress

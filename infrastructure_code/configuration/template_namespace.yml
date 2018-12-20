@@ -1,0 +1,17 @@
+#################################################################################
+# This namespace template is an simple example.
+# NAMESPACE_NAME and NAMEAPCE_LABEL are tokens that are replaced by the
+# configuration/configure-namespace.sh
+#
+# For more information on Kubernete Namespaces and use see
+# https://cloud.ibm.com/docs/containers/cs_secure.html#container
+# https://cloud.ibm.com/docs/containers/cs_users.html#role-binding
+# https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+#################################################################################
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: NAMESPACE_NAME
+  labels:
+    name: NAMESPACE_LABEL
