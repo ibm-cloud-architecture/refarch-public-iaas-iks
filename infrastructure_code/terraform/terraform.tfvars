@@ -68,3 +68,4 @@ cloudant_plan = "@TF_CLOUDANT_PLAN@"
 #######################################################
 devops_ip   = "@TF_DEVOPS_IP@"
 glb_ip      = "@TF_GLB@"
+
