@@ -10,7 +10,7 @@
 resource "null_resource" "configure-monitoring" {
   provisioner "local-exec" {
     command                   = <<EOT
-../configuration/configure-monitoring.sh "${data.ibm_container_cluster_config.cluster_config.config_file_path}" "${ibm_container_cluster.kubecluster.name}" "${var.sysdig_access_key}" "ingest.us-south.monitoring.cloud.ibm.com"
+../configuration/configure-monitoring.sh "${data.ibm_container_cluster_config.cluster_config.config_file_path}" "${ibm_container_cluster.kubecluster.name}" "${ibm_resource_key.monitor_secret.credentials.ingestion_key}" "ingest.us-south.monitoring.cloud.ibm.com"
 EOT
   }
   depends_on   = ["ibm_container_cluster.kubecluster"]

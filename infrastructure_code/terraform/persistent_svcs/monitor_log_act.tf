@@ -21,6 +21,13 @@ resource "ibm_resource_instance" "monitoring" {
   }
 }
 
+# Create logAnalysis instance access key
+resource "ibm_resource_key" "monitor_secret" {
+  name                 = "kub_monitor_secret"
+  role                 = "Manager"
+  resource_instance_id = "${ibm_resource_instance.monitoring.id}"
+}
+
 # LogDNA
 
 resource "ibm_resource_instance" "logging" {
@@ -40,4 +47,11 @@ resource "ibm_resource_instance" "logging" {
     update = "15m"
     delete = "15m"
   }
+}
+
+# Create logAnalysis instance access key
+resource "ibm_resource_key" "logging_secret" {
+  name                 = "kub_logging_secret"
+  role                 = "Manager"
+  resource_instance_id = "${ibm_resource_instance.logging.id}"
 }

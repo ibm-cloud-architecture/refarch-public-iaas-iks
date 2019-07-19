@@ -24,12 +24,6 @@ variable "account_id" {}
 variable "resource_group" {}
 
 ################################################
-# Monitoring and Logging variables
-################################################
-variable "logdna_ingestion_key" {}
-variable "sysdig_access_key"    {}
-
-################################################
 # Environment
 ################################################
 variable "env_name" {}
