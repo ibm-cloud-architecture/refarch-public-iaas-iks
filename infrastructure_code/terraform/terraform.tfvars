@@ -23,12 +23,6 @@ account_id  = "@TF_ACCOUNT_ID@"
 resource_group = "@TF_RESOURCE_GROUP@"
 
 ################################################
-# Monitoring and Logging variables
-################################################
-logdna_ingestion_key = "@TF_LOGDNA_INGEST_KEY@"
-sysdig_access_key    = "@TF_SYSDIG_ACCESS_KEY@"
-
-################################################
 # Environment Name - used in the Kube Namespace
 ################################################
 env_name = "@TF_ENV_NAME@"
