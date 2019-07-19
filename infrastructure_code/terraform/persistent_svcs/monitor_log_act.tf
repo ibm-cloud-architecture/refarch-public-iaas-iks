@@ -7,7 +7,7 @@ resource "ibm_resource_instance" "monitoring" {
   service           = "sysdig-monitor"
   plan              = "lite"
   location          = "us-south"
-  resource_group_id = "${var.resource_group.id}"
+  resource_group_id = "${data.ibm_resource_group.group.id}"
   tags              = ["tag1", "tag2"]
 
   parameters = {
@@ -35,7 +35,7 @@ resource "ibm_resource_instance" "logging" {
   service           = "logdna"
   plan              = "lite"
   location          = "us-south"
-  resource_group_id = "${var.resource_group.id}"
+  resource_group_id = "${data.ibm_resource_group.group.id}"
   tags              = ["tag1", "tag2"]
 
   parameters = {
