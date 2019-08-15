@@ -7,7 +7,7 @@ resource "ibm_resource_instance" "monitoring" {
   service           = "sysdig-monitor"
   plan              = "lite"
   location          = "us-south"
-  resource_group_id = "${var.resource_group.id}"
+  resource_group_id = "${data.ibm_resource_group.group.id}"
   tags              = ["tag1", "tag2"]
 
   parameters = {
@@ -21,6 +21,13 @@ resource "ibm_resource_instance" "monitoring" {
   }
 }
 
+# Create logAnalysis instance access key
+resource "ibm_resource_key" "monitor_secret" {
+  name                 = "kub_monitor_secret"
+  role                 = "Manager"
+  resource_instance_id = "${ibm_resource_instance.monitoring.id}"
+}
+
 # LogDNA
 
 resource "ibm_resource_instance" "logging" {
@@ -28,7 +35,7 @@ resource "ibm_resource_instance" "logging" {
   service           = "logdna"
   plan              = "lite"
   location          = "us-south"
-  resource_group_id = "${var.resource_group.id}"
+  resource_group_id = "${data.ibm_resource_group.group.id}"
   tags              = ["tag1", "tag2"]
 
   parameters = {
@@ -40,4 +47,11 @@ resource "ibm_resource_instance" "logging" {
     update = "15m"
     delete = "15m"
   }
+}
+
+# Create logAnalysis instance access key
+resource "ibm_resource_key" "logging_secret" {
+  name                 = "kub_logging_secret"
+  role                 = "Manager"
+  resource_instance_id = "${ibm_resource_instance.logging.id}"
 }

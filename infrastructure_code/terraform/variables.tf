@@ -14,7 +14,9 @@
 ################################################
 # IBM Cloud Provider vars
 ################################################
-variable "paas_apikey" {}   # IBM Cloud API Credentials
+variable "ibm_bmx_api_key" {} # IBM Cloud API Credentials
+variable "ibm_sl_username" {}
+variable "ibm_sl_api_key" {}
 variable "ibm_region" {}
 
 ################################################
@@ -22,12 +24,6 @@ variable "ibm_region" {}
 ################################################
 variable "account_id" {}
 variable "resource_group" {}
-
-################################################
-# Monitoring and Logging variables
-################################################
-variable "logdna_ingestion_key" {}
-variable "sysdig_access_key"    {}
 
 ################################################
 # Environment

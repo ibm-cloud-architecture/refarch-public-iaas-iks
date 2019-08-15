@@ -10,7 +10,7 @@
 resource "null_resource" "configure-logging" {
   provisioner "local-exec" {
     command                   = <<EOT
-../configuration/configure-logging.sh "${data.ibm_container_cluster_config.cluster_config.config_file_path}" "logdna-agent-key" "${var.logdna_ingestion_key}"
+../configuration/configure-logging.sh "${data.ibm_container_cluster_config.cluster_config.config_file_path}" "logdna-agent-key" "${ibm_resource_key.logging_secret.credentials.ingestion_key}"
 EOT
   }
   depends_on   = ["ibm_container_cluster.kubecluster"]

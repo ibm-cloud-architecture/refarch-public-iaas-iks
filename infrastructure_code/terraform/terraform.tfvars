@@ -23,12 +23,6 @@ account_id  = "@TF_ACCOUNT_ID@"
 resource_group = "@TF_RESOURCE_GROUP@"
 
 ################################################
-# Monitoring and Logging variables
-################################################
-logdna_ingestion_key = "@TF_LOGDNA_INGEST_KEY@"
-sysdig_access_key    = "@TF_SYSDIG_ACCESS_KEY@"
-
-################################################
 # Environment Name - used in the Kube Namespace
 ################################################
 env_name = "@TF_ENV_NAME@"
@@ -51,6 +45,10 @@ zone1_private_vlan_id = "@TF_ZONE1_PRIVATE_VLAN_ID@"
 ################################################
 # Container Cluster variables for Second AZ
 ################################################
+# For public/private vlans, please ensure they are on the same router
+# You can do this by running ibmcloud ks vlans LOCATION (i.e. dal10)
+# private vlans will be on routers bcr and public will be on fcr
+# The vlans need to be on routers with the same digits (i.e. fcr01a.dal10 and bcr01a.dal10)
 zone2 = "@TF_ZONE2_NAME@"
 zone2_public_vlan_id  = "@TF_ZONE2_PUBLIC_VLAN_ID@"
 zone2_private_vlan_id = "@TF_ZONE2_PRIVATE_VLAN_ID@"
@@ -74,3 +72,5 @@ cloudant_plan = "@TF_CLOUDANT_PLAN@"
 #######################################################
 devops_ip   = "@TF_DEVOPS_IP@"
 glb_ip      = "@TF_GLB@"
+
+
